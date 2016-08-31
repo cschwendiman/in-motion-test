@@ -1,0 +1,17 @@
+{
+"name": "HomeMovieCollection",
+  "version": "0.0.1",
+  "devDependencies": {
+    "gulp": "",
+    "gulp-livereload": "",
+    "vinyl-source-stream": "",
+    "browserify": "",
+    "watchify": ""
+  },
+  "dependencies": {
+    "jquery": "",
+    "underscore": "",
+    "backbone": "",
+    "hbsfy": ""
+  }
+}
