@@ -19,3 +19,15 @@ body {
 #add-movie:hover {
     background-color: forestgreen;
 }
+
+.movie {
+    height: 270px;
+}
+
+.movie .glyphicon:hover {
+    color: yellowgreen;
+}
+
+.movie .delete .glyphicon {
+    margin-left: 10px;
+}
