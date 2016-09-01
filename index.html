@@ -1,9 +1,26 @@
 <html>
     <head>
+        <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="css/index.css" rel="stylesheet">
         <script src="dist/js/bundle.js"></script>
     </head>
     <body>
-        <div id="main-view"></div>
+        <nav class="navbar navbar-fixed-top navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <span class="navbar-brand" href="#">Home Movie Collection</span>
+                </div>
+
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search...">
+                    </div>
+                </form>
+            </div>
+        </nav>
+        <div id="main-view" class="container-fluid">
+            <div class="row"></div>
+            <button id="add-movie"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> <span class="hidden-xs">Add Movie</span></button>
+        </div>
     </body>
 </html>

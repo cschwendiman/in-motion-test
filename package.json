@@ -12,6 +12,7 @@
     "jquery": "",
     "underscore": "",
     "backbone": "",
-    "hbsfy": ""
+    "hbsfy": "",
+    "bootstrap": ""
   }
 }

@@ -6,9 +6,7 @@ var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var watchify = require('watchify');
 
-var hbsfy = require("hbsfy").configure({
-  extensions: ["html"]
-});
+var hbsfy = require("hbsfy");
 
 gulp.task('watch', function() {
 	var props = {entries: ['./index.js']};

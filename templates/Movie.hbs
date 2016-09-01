@@ -1,0 +1,19 @@
+<div class="movie panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ title }}</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-unstyled">
+            <li><b>Year:</b> {{ year }}</li>
+            <li><b>Genre:</b> {{ genre }}</li>
+            <li><b>Rating:</b> {{ rating }}/5</li>
+            <li><b>Actors:</b>
+                <ul>
+                    {{#each actors}}
+                        <li>{{ this }}</li>
+                    {{/each}}
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

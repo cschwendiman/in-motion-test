@@ -2,6 +2,8 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
 
+template = require("../templates/MovieForm.hbs");
+
 module.exports = Backbone.View.extend({
     className: "movie-form",
     initialize: function() {
