@@ -5,8 +5,48 @@ Backbone.$ = $;
 
 var MovieModel = require('../models/MovieModel');
 
+var testMovies = [
+    {
+        'title': 'Movie A',
+        'year': 2000,
+        'genre': 'Action',
+        'actors': ['Actor 1', 'Actor 2'],
+        'rating': 4
+    },
+    {
+        'title': 'Movie B',
+        'year': 2010,
+        'genre': 'Drama',
+        'actors': ['Actor 1', 'Actor 2'],
+        'rating': 2
+    },
+    {
+        'title': 'Movie C',
+        'year': 2016,
+        'genre': 'Fantasy',
+        'actors': ['Actor 1', 'Actor 2'],
+        'rating': 5
+    }
+]
+
 module.exports = Backbone.Collection.extend({
-    model: MovieModel
+    model: MovieModel,
+    initialize: function() {
+        this.on('change', this.storeCollection);
+        this.on('update', this.storeCollection);
+        this.on('reset', this.storeCollection);
+
+        var storedCollection = localStorage.getItem('movieCollection');
+        if (storedCollection != '[]') {
+            this.reset(JSON.parse(storedCollection));
+        }
+        else {
+            this.reset(testMovies);
+        }
+    },
+    storeCollection: function() {
+        localStorage.setItem('movieCollection', JSON.stringify(this));
+    }
 });
 },{"../models/MovieModel":3,"backbone":4,"jquery":38}],2:[function(require,module,exports){
 var $ = require('jquery');
@@ -17102,7 +17142,7 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
 
   return "<div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n        <div class=\"modal-header\">\n            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n            <h4 class=\"modal-title\" id=\"myModalLabel\">Add Movie</h4>\n        </div>\n        <div class=\"modal-body\">\n            <form>\n                <div class=\"form-group\">\n                    <label for=\"title\">Title</label>\n                    <input type=\"text\" class=\"form-control\" id=\"title\" name=\"title\" placeholder=\"\" value=\""
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
-    + "\">\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"year\">Year</label>\n                    <input type=\"number\" class=\"form-control\" id=\"year\" name=\"year\" placeholder=\"\" value=\""
+    + "\">\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"year\">Year</label>\n                    <input type=\"number\" class=\"form-control\" id=\"year\" name=\"year\" placeholder=\"\" min=\"1800\" max=\"2050\" value=\""
     + alias4(((helper = (helper = helpers.year || (depth0 != null ? depth0.year : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"year","hash":{},"data":data}) : helper)))
     + "\">\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"genre\">Genre</label>\n                    <input type=\"text\" class=\"form-control\" id=\"genre\" name=\"genre\" placeholder=\"\" value=\""
     + alias4(((helper = (helper = helpers.genre || (depth0 != null ? depth0.genre : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"genre","hash":{},"data":data}) : helper)))
@@ -17125,29 +17165,7 @@ var MovieFormView = require('./MovieFormView');
 var MovieCollection = require('../collections/MovieCollection');
 var MovieModel = require('../models/MovieModel');
 
-var testMovies = [
-    {
-        'title': 'Movie A',
-        'year': 2000,
-        'genre': 'Action',
-        'actors': ['Actor 1', 'Actor 2'],
-        'rating': 4
-    },
-    {
-        'title': 'Movie B',
-        'year': 2010,
-        'genre': 'Drama',
-        'actors': ['Actor 1', 'Actor 2'],
-        'rating': 2
-    },
-    {
-        'title': 'Movie C',
-        'year': 2016,
-        'genre': 'Fantasy',
-        'actors': ['Actor 1', 'Actor 2'],
-        'rating': 5
-    }
-]
+
 
 module.exports = Backbone.View.extend({
     el: "#main-view",
@@ -17156,7 +17174,7 @@ module.exports = Backbone.View.extend({
         'movie:edit': 'handleEditMovie'
     },
     initialize: function() {
-        this.movieCollection = new MovieCollection(testMovies);
+        this.movieCollection = new MovieCollection();
         this.render();
     },
     render: function() {

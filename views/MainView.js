@@ -10,29 +10,7 @@ var MovieFormView = require('./MovieFormView');
 var MovieCollection = require('../collections/MovieCollection');
 var MovieModel = require('../models/MovieModel');
 
-var testMovies = [
-    {
-        'title': 'Movie A',
-        'year': 2000,
-        'genre': 'Action',
-        'actors': ['Actor 1', 'Actor 2'],
-        'rating': 4
-    },
-    {
-        'title': 'Movie B',
-        'year': 2010,
-        'genre': 'Drama',
-        'actors': ['Actor 1', 'Actor 2'],
-        'rating': 2
-    },
-    {
-        'title': 'Movie C',
-        'year': 2016,
-        'genre': 'Fantasy',
-        'actors': ['Actor 1', 'Actor 2'],
-        'rating': 5
-    }
-]
+
 
 module.exports = Backbone.View.extend({
     el: "#main-view",
@@ -41,7 +19,7 @@ module.exports = Backbone.View.extend({
         'movie:edit': 'handleEditMovie'
     },
     initialize: function() {
-        this.movieCollection = new MovieCollection(testMovies);
+        this.movieCollection = new MovieCollection();
         this.render();
     },
     render: function() {
