@@ -80,3 +80,5 @@ You MAY use other publicly available JS components (please document separately a
 
 
 # Comments About Implementation
+
+To view the application, you must `npm install` first to download all the dependencies for the project - I didn't include them in the repository. You can then just open `index.html`.
