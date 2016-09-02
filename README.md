@@ -78,3 +78,5 @@ You MAY use other publicly available JS components (please document separately a
 
 - Email that bundle to the person who sent you this coding challenge or host it on dropbox and email the link to download it.
 
+
+# Comments About Implementation

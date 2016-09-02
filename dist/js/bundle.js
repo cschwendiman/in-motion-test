@@ -17146,8 +17146,12 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
 },{"hbsfy/runtime":37}],41:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var HandlebarsCompiler = require('hbsfy/runtime');
-module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+module.exports = HandlebarsCompiler.template({"1":function(container,depth0,helpers,partials,data) {
+    return "                        <input type=\"text\" class=\"actor form-control\" name=\"actors\" value=\""
+    + container.escapeExpression(container.lambda(depth0, depth0))
+    + "\"></input>\n";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "<div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n        <div class=\"modal-header\">\n            <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n            <h4 class=\"modal-title\" id=\"myModalLabel\">Add Movie</h4>\n        </div>\n        <div class=\"modal-body\">\n            <form>\n                <div class=\"form-group\">\n                    <label for=\"title\">Title</label>\n                    <input type=\"text\" class=\"form-control\" id=\"title\" name=\"title\" placeholder=\"\" value=\""
     + alias4(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
@@ -17157,7 +17161,9 @@ module.exports = HandlebarsCompiler.template({"compiler":[7,">= 4.0.0"],"main":f
     + alias4(((helper = (helper = helpers.genre || (depth0 != null ? depth0.genre : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"genre","hash":{},"data":data}) : helper)))
     + "\">\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"rating\">Rating</label>\n                    <input type=\"number\" class=\"form-control\" id=\"rating\" name=\"rating\" placeholder=\"\" min=\"1\" max=\"5\" value=\""
     + alias4(((helper = (helper = helpers.rating || (depth0 != null ? depth0.rating : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"rating","hash":{},"data":data}) : helper)))
-    + "\">\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"actors\">Actors</label>\n                    <textarea id=\"actors\" class=\"form-control\" name=\"actors\"></textarea>\n                </div>\n            </form>\n\n        </div>\n        <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n            <button type=\"button\" class=\"btn btn-primary\" id=\"save\">Save</button>\n        </div>\n    </div>\n</div>\n";
+    + "\">\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"actors\">Actors\n                        <button class=\"add-actor btn btn-default btn-xs\" type=\"submit\"><span class=\"glyphicon glyphicon-plus\"></span> Add Actor</button>\n                    </label>\n                    <!-- Form arrays aren't playing nice with serializeArray so I'm naming them all the same thing -->\n"
+    + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.actors : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "                    <input type=\"text\" class=\"actor form-control\" name=\"actors\" value=\"\"></input>\n                </div>\n            </form>\n\n        </div>\n        <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n            <button type=\"button\" class=\"btn btn-primary\" id=\"save\">Save</button>\n        </div>\n    </div>\n</div>\n";
 },"useData":true});
 
 },{"hbsfy/runtime":37}],42:[function(require,module,exports){
@@ -17239,13 +17245,15 @@ module.exports = Backbone.View.extend({
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
+var _ = require('underscore');
 
 var template = require("../templates/MovieForm.hbs");
 
 module.exports = Backbone.View.extend({
     className: "movie-form modal fade",
     events: {
-        'click #save': 'handleSave'
+        'click #save': 'handleSave',
+        'click .add-actor': 'handleAddActor'
     },
     initialize: function() {
         this.render();
@@ -17254,17 +17262,32 @@ module.exports = Backbone.View.extend({
         this.$el.html(template(this.model.toJSON()));
     },
     handleSave: function() {
-        // TODO fix actors
         this.$el.modal('hide');
         var form = this.$('form');
-        var formValues = form.serializeArray().reduce(function(obj, input) {
-            obj[input.name] = input.value;
-            return obj;
-        }, {});
+        var formValues = this.model.toJSON();
+        formValues.actors = [];
+        _.each(form.serializeArray(), function(input) {
+            input.value = input.value.trim();
+            if (input.name == 'actors') {
+                if (input.value != '') {
+                    formValues[input.name].push(input.value);
+                }
+            }
+            else {
+                formValues[input.name] = input.value;
+            }
+        });
         this.model.set(formValues);
+    },
+    handleAddActor: function(e) {
+        e.preventDefault();
+        console.log(arguments);
+        console.log(this);
+        var newInput = $('<input type="text" class="actor form-control" name="actors" value=""></input>')
+        $(e.target).parent().parent().append(newInput);
     }
 });
-},{"../templates/MovieForm.hbs":41,"backbone":4,"jquery":38}],44:[function(require,module,exports){
+},{"../templates/MovieForm.hbs":41,"backbone":4,"jquery":38,"underscore":39}],44:[function(require,module,exports){
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;

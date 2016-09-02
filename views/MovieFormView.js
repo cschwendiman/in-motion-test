@@ -1,13 +1,15 @@
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
+var _ = require('underscore');
 
 var template = require("../templates/MovieForm.hbs");
 
 module.exports = Backbone.View.extend({
     className: "movie-form modal fade",
     events: {
-        'click #save': 'handleSave'
+        'click #save': 'handleSave',
+        'click .add-actor': 'handleAddActor'
     },
     initialize: function() {
         this.render();
@@ -16,13 +18,28 @@ module.exports = Backbone.View.extend({
         this.$el.html(template(this.model.toJSON()));
     },
     handleSave: function() {
-        // TODO fix actors
         this.$el.modal('hide');
         var form = this.$('form');
-        var formValues = form.serializeArray().reduce(function(obj, input) {
-            obj[input.name] = input.value;
-            return obj;
-        }, {});
+        var formValues = this.model.toJSON();
+        formValues.actors = [];
+        _.each(form.serializeArray(), function(input) {
+            input.value = input.value.trim();
+            if (input.name == 'actors') {
+                if (input.value != '') {
+                    formValues[input.name].push(input.value);
+                }
+            }
+            else {
+                formValues[input.name] = input.value;
+            }
+        });
         this.model.set(formValues);
+    },
+    handleAddActor: function(e) {
+        e.preventDefault();
+        console.log(arguments);
+        console.log(this);
+        var newInput = $('<input type="text" class="actor form-control" name="actors" value=""></input>')
+        $(e.target).parent().parent().append(newInput);
     }
 });

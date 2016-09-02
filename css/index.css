@@ -31,3 +31,7 @@ body {
 .movie .delete .glyphicon {
     margin-left: 10px;
 }
+
+input.actor {
+    margin-bottom: 10px;
+}
