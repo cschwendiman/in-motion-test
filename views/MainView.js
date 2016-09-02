@@ -13,20 +13,22 @@ var MovieModel = require('../models/MovieModel');
 
 
 module.exports = Backbone.View.extend({
-    el: "#main-view",
+    el: "body",
     events: {
         'click #add-movie': 'handleAddMovie',
+        'keyup #search': 'handleSearch',
         'movie:edit': 'handleEditMovie'
     },
     initialize: function() {
         this.movieCollection = new MovieCollection();
+        this.displayed = this.movieCollection.toArray();
         this.render();
     },
     render: function() {
-        var self = this;
-        this.movieCollection.each(function(movie) {
-            self.appendMovie(new MovieView({model: movie}));
-        });
+        this.$('.row').empty();
+        _.each(this.displayed, function(movie) {
+            this.appendMovie(new MovieView({model: movie}));
+        }, this);
     },
     appendMovie: function(child) {
         this.$('.row').append(child.$el);
@@ -45,6 +47,16 @@ module.exports = Backbone.View.extend({
         _.defer(function() {
             form.$el.modal();
         }, this);
+    },
+    handleSearch: function(e) {
+        var query = $(e.target).val().trim();
+        if(query == '') {
+            this.displayed = this.movieCollection.toArray();
+        }
+        else {
+            this.displayed = this.movieCollection.search(query);
+        }
+        this.render();
     },
     handleEditMovie: function(e, model) {
         var form = new MovieFormView({model: model});

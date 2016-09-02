@@ -1,6 +1,7 @@
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
+var _ = require('underscore');
 
 var MovieModel = require('../models/MovieModel');
 
@@ -45,5 +46,13 @@ module.exports = Backbone.Collection.extend({
     },
     storeCollection: function() {
         localStorage.setItem('movieCollection', JSON.stringify(this));
+    },
+    search: function(query) {
+        var pattern = new RegExp(query, "i");
+        return this.filter(function(movie) {
+            return _.some(movie.attributes, function(value) {
+                return pattern.test(value);
+            })
+        });
     }
 });
