@@ -37,9 +37,8 @@ module.exports = Backbone.View.extend({
     },
     handleAddActor: function(e) {
         e.preventDefault();
-        console.log(arguments);
-        console.log(this);
-        var newInput = $('<input type="text" class="actor form-control" name="actors" value=""></input>')
-        $(e.target).parent().parent().append(newInput);
+        var newInput = $('<input type="text" class="actor form-control" name="actors" value=""></input>');
+        var actors = $(e.target).parents('.actors');
+        actors.append(newInput);
     }
 });

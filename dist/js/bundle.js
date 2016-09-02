@@ -17161,7 +17161,7 @@ module.exports = HandlebarsCompiler.template({"1":function(container,depth0,help
     + alias4(((helper = (helper = helpers.genre || (depth0 != null ? depth0.genre : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"genre","hash":{},"data":data}) : helper)))
     + "\">\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"rating\">Rating</label>\n                    <input type=\"number\" class=\"form-control\" id=\"rating\" name=\"rating\" placeholder=\"\" min=\"1\" max=\"5\" value=\""
     + alias4(((helper = (helper = helpers.rating || (depth0 != null ? depth0.rating : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"rating","hash":{},"data":data}) : helper)))
-    + "\">\n                </div>\n                <div class=\"form-group\">\n                    <label for=\"actors\">Actors\n                        <button class=\"add-actor btn btn-default btn-xs\" type=\"submit\"><span class=\"glyphicon glyphicon-plus\"></span> Add Actor</button>\n                    </label>\n                    <!-- Form arrays aren't playing nice with serializeArray so I'm naming them all the same thing -->\n"
+    + "\">\n                </div>\n                <div class=\"form-group actors\">\n                    <label for=\"actors\">Actors\n                        <button class=\"add-actor btn btn-default btn-xs\" type=\"submit\"><span class=\"glyphicon glyphicon-plus\"></span> Add Actor</button>\n                    </label>\n                    <!-- Form arrays aren't playing nice with serializeArray so I'm naming them all the same thing -->\n"
     + ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.actors : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "                    <input type=\"text\" class=\"actor form-control\" name=\"actors\" value=\"\"></input>\n                </div>\n            </form>\n\n        </div>\n        <div class=\"modal-footer\">\n            <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Close</button>\n            <button type=\"button\" class=\"btn btn-primary\" id=\"save\">Save</button>\n        </div>\n    </div>\n</div>\n";
 },"useData":true});
@@ -17281,10 +17281,9 @@ module.exports = Backbone.View.extend({
     },
     handleAddActor: function(e) {
         e.preventDefault();
-        console.log(arguments);
-        console.log(this);
-        var newInput = $('<input type="text" class="actor form-control" name="actors" value=""></input>')
-        $(e.target).parent().parent().append(newInput);
+        var newInput = $('<input type="text" class="actor form-control" name="actors" value=""></input>');
+        var actors = $(e.target).parents('.actors');
+        actors.append(newInput);
     }
 });
 },{"../templates/MovieForm.hbs":41,"backbone":4,"jquery":38,"underscore":39}],44:[function(require,module,exports){
